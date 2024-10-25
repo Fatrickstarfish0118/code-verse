@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Custom C# Editor</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 20px;
+        }
+        #editor-container {
+            display: flex;
+            flex-direction: column;
+            margin: 0 auto;
+            max-width: 800px;
+        }
+        .editor-header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px;
+            text-align: center;
+            font-size: 24px;
+        }
+        #code-area {
+            width: 100%;
+            height: 300px;
+            background-color: #2d2d2d;
+            color: #ffffff;
+            font-family: monospace;
+            padding: 10px;
+            border-radius: 4px;
+            border: 2px solid #4CAF50;
+            resize: vertical;
+        }
+        #run-button {
+            margin-top: 10px;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        #run-button:hover {
+            background-color: #45a049;
+        }
+        #output {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #f9f9f9;
+            border: 2px solid #4CAF50;
+            border-radius: 4px;
+            min-height: 50px;
+            white-space: pre-wrap; /* Preserve line breaks */
+        }
+    </style>
+</head>
+<body>
+    <div id="editor-container">
+        <div class="editor-header">C# Online Code Editor</div>
+        <textarea id="code-area" placeholder="Write your C# code here..."></textarea>
+        <button id="run-button" onclick="runCode()">Run</button>
+        <div id="output"></div>
+    </div>
+
+    <script>
+        function runCode() {
+            const code = document.getElementById('code-area').value;
+
+            // Mock API response for C# code execution (replace this with actual API call)
+            const mockApiResponse = simulateCSharpExecution(code);
+
+            // Display the result in the output area
+            document.getElementById('output').textContent = "Output:\n" + mockApiResponse;
+        }
+
+        function simulateCSharpExecution(code) {
+            // Simple simulation of output based on the code entered
+            if (code.includes("Console.WriteLine")) {
+                return "Hello World!";
+            } else {
+                return "C# code executed successfully, but no output.";
+            }
+        }
+
+        // In a real scenario, this function should send code to a server-side API that processes C#
+        // Example (using Fetch for API call):
+        // function runCode() {
+        //     const code = document.getElementById('code-area').value;
+        //     fetch('https://api.example.com/execute', {
+        //         method: 'POST',
+        //         body: JSON.stringify({ language: 'csharp', code: code }),
+        //         headers: {
+        //             'Content-Type': 'application/json'
+        //         }
+        //     })
+        //     .then(response => response.json())
+        //     .then(data => {
+        //         document.getElementById('output').textContent = data.output;
+        //     })
+        //     .catch(error => {
+        //         document.getElementById('output').textContent = 'Error: ' + error.message;
+        //     });
+        // }
+    </script>
+</body>
+</html>

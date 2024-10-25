@@ -1,0 +1,50 @@
+using System;
+using System.Diagnostics;
+using Microsoft.AspNetCore.Mvc;
+
+[Route("api/[controller]")]
+[ApiController]
+public class ExecuteController : ControllerBase
+{
+    [HttpPost]
+    public IActionResult ExecuteCode([FromBody] CodeInput input)
+    {
+        try
+        {
+            string code = input.Code;
+            string output = RunCSharpCode(code);
+            return Ok(output);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+    }
+
+    private string RunCSharpCode(string code)
+    {
+        string result = "";
+        var process = new Process
+        {
+            StartInfo = new ProcessStartInfo
+            {
+                FileName = "dotnet",
+                Arguments = $"exec path-to-compiler {code}",
+                RedirectStandardOutput = true,
+                RedirectStandardError = true,
+                UseShellExecute = false,
+                CreateNoWindow = true
+            }
+        };
+
+        process.Start();
+        result = process.StandardOutput.ReadToEnd();
+        process.WaitForExit();
+        return result;
+    }
+}
+
+public class CodeInput
+{
+    public string Code { get; set; }
+}
